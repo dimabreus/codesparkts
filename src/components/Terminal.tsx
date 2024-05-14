@@ -1,6 +1,8 @@
 import { FitAddon } from "@xterm/addon-fit";
 import { useEffect, useRef } from "react";
 import { Terminal as XtermTerminal } from '@xterm/xterm';
+import { ipcRenderer } from "../electron/ipcHandlers";
+import '@xterm/xterm/css/xterm.css';
 
 const Terminal = () => {
     const terminalRef = useRef<HTMLDivElement | null>(null);
@@ -29,14 +31,16 @@ const Terminal = () => {
 
         let commandBuffer: string = '';
 
+        terminal.current.write('$ ');
+
         terminal.current.onData(data => {
             switch (data) {
                 case '\r':
-                    proccesCommand(commandBuffer);
+                    processCommand(commandBuffer);
                     commandBuffer = '';
                     break;
                 case '\u007F':
-                    if (terminal.current?.buffer.active.cursorX > 0) {
+                    if (terminal.current?.buffer.active.cursorX && terminal.current?.buffer.active.cursorX > 2) {
                         commandBuffer = commandBuffer.slice(0, -1);
                         terminal.current?.write('\b \b');
                     }
@@ -52,9 +56,22 @@ const Terminal = () => {
         const processCommand = async (command: string) => {
             console.log(`Executing command: ${command}`);
             if (!command.trim()) return
+            terminal.current?.writeln('');
+            try {
+                const result: string = await ipcRenderer.invoke('run-command', command);
+                terminal.current?.writeln(result);
+                console.log(`Result of ${command}:`, result);
+            } catch (error) {
+                console.error(error);
+                terminal.current?.writeln(`Error ${error}`);
+            }
+            terminal.current?.write('$ ');
+        };
+
+        return () => {
+            terminal.current?.dispose();
+            window.removeEventListener('resize', handleResize);
         }
-
-
     }, [])
     return (
         <div className="Terminal" style={{ width: '100%', height: '100%' }}>
