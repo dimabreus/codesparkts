@@ -1,5 +1,7 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
+const pty = require('node-pty');
+const os = require('os');
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -13,7 +15,7 @@ function createWindow() {
         }
     });
 
-    win.loadURL('http://localhost:5173'); // URL вашего React-приложения
+    win.loadURL('http://localhost:5176/'); // URL вашего React-приложения
     win.webContents.openDevTools();
 
     const menu = Menu.buildFromTemplate([
@@ -40,6 +42,22 @@ function createWindow() {
     ]);
 
     Menu.setApplicationMenu(menu);
+
+    const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
+    const ptyProcess = pty.spawn(shell, [], {
+        name: 'xterm-color',
+        cwd: process.env.HOME,
+        env: { ...process.env, PS1: '\\u@\\h \\W $ ' }
+    });
+
+    ptyProcess.on('data', function (data) {
+        win.webContents.send('terminal.incomingData', data);
+    });
+
+    ipcMain.on('terminal.keystroke', (event, input) => {
+        ptyProcess.write(input);
+    });
+
 }
 
 require("./ipcMain.cjs")

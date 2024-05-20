@@ -1,83 +1,53 @@
-import { FitAddon } from "@xterm/addon-fit";
-import { useEffect, useRef } from "react";
-import { Terminal as XtermTerminal } from '@xterm/xterm';
-import { ipcRenderer } from "../electron/ipcHandlers";
+import React, { useEffect, useRef } from 'react';
+import { Terminal } from '@xterm/xterm';
+import { FitAddon } from '@xterm/addon-fit';
 import '@xterm/xterm/css/xterm.css';
+import { ipcRenderer } from '../electron/ipcHandlers';
 
-const Terminal = () => {
-    const terminalRef = useRef<HTMLDivElement | null>(null);
-    const terminal = useRef<XtermTerminal | null>(null);
+const XTermComponent: React.FC = () => {
+    const terminalRef = useRef<HTMLDivElement>(null);
+    const xterm = useRef<Terminal | null>(null);
     const fitAddon = useRef<FitAddon>(new FitAddon());
 
     useEffect(() => {
-        terminal.current = new XtermTerminal({
-            cursorBlink: true,
-            theme: {
-                background: '1e1e1e',
-                foreground: '#ffffff'
-            }
-        });
-
-        terminal.current.loadAddon(fitAddon.current);
-        if (terminalRef.current != null) {
-            terminal.current.open(terminalRef.current);
-        };
-        setTimeout(() => fitAddon.current.fit(), 0)
-
-        const handleResize = () => {
-            setTimeout(() => fitAddon.current.fit(), 0);
-        };
-        window.addEventListener('resize', handleResize);
-
-        let commandBuffer: string = '';
-
-        terminal.current.write('$ ');
-
-        terminal.current.onData(data => {
-            switch (data) {
-                case '\r':
-                    processCommand(commandBuffer);
-                    commandBuffer = '';
-                    break;
-                case '\u007F':
-                    if (terminal.current?.buffer.active.cursorX && terminal.current?.buffer.active.cursorX > 2) {
-                        commandBuffer = commandBuffer.slice(0, -1);
-                        terminal.current?.write('\b \b');
-                    }
-                    break;
-                default:
-                    commandBuffer += data;
-                    terminal.current?.write(data);
-                    break;
-            };
-            console.log(`Current command: ${commandBuffer}`);
-        });
-
-        const processCommand = async (command: string) => {
-            console.log(`Executing command: ${command}`);
-            if (!command.trim()) return
-            terminal.current?.writeln('');
-            try {
-                const result: string = await ipcRenderer.invoke('run-command', command);
-                terminal.current?.writeln(result);
-                console.log(`Result of ${command}:`, result);
-            } catch (error) {
-                console.error(error);
-                terminal.current?.writeln(`Error ${error}`);
-            }
-            terminal.current?.write('$ ');
-        };
-
-        return () => {
-            terminal.current?.dispose();
-            window.removeEventListener('resize', handleResize);
+        xterm.current = new Terminal();
+        xterm.current.loadAddon(fitAddon.current);
+    
+        if (terminalRef.current) {
+            xterm.current.open(terminalRef.current);
+            requestAnimationFrame(() => {
+                fitAddon.current.fit(); // Вызывается на следующем кадре анимации
+            });
         }
-    }, [])
-    return (
-        <div className="Terminal" style={{ width: '100%', height: '100%' }}>
-            <div ref={terminalRef} style={{ width: '100%', height: '100%' }} />
-        </div>
-    )
-}
+    
+        ipcRenderer.on('terminal.incomingData', (_: any, data: any) => {
+            xterm.current?.write(data);
+        });
+    
+        xterm.current.onData(input => {
+            ipcRenderer.send('terminal.keystroke', input);
+        });
 
-export default Terminal
+        ipcRenderer.send('terminal.keystroke', "clear\r");    
+        const handleResize = () => {
+            if (fitAddon.current) {
+                requestAnimationFrame(() => {
+                    fitAddon.current.fit(); // Вызывается на следующем кадре анимации
+                });
+            }
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+            ipcRenderer.removeAllListeners('terminal.incomingData');
+            window.removeEventListener('resize', handleResize);
+            xterm.current?.dispose();
+        };
+    }, []);
+    
+
+    return <div ref={terminalRef} style={{ width: '100%', height: '100%' }} />;
+};
+
+export default XTermComponent;

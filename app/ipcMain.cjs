@@ -18,7 +18,7 @@ ipcMain.handle('run-command', (event, command) => {
 
     const powershellCommand = `$OutputEncoding = [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; ${command}`;
     return new Promise((resolve, reject) => {
-        exec(powershellCommand, { shell: 'powershell.exe', cwd: currentDir, encoding: 'utf8' }, (error, stdout, stderr) => {
+        exec(powershellCommand, { shell: 'bash', cwd: currentDir, encoding: 'utf8' }, (error, stdout, stderr) => {
             if (error) {
                 reject(stderr);
             } else {
