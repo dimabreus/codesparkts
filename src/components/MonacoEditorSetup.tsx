@@ -31,9 +31,11 @@ const MonacoEditorSetup: FunctionComponent<MonacoEditorSetupProps> = ({ onEditor
 
     return (
         <div className='Editor'>
+        {/* <div> */}
             <MonacoEditor
                 key={language}
-                height="100vh"
+                // height="70vh"
+                // height={'100%'}
                 defaultLanguage={language}
                 value={editorValue}
                 onChange={handleEditorChange}
