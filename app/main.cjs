@@ -15,7 +15,8 @@ function createWindow() {
         }
     });
 
-    win.loadURL('http://localhost:5176/'); // URL вашего React-приложения
+    win.loadURL('http://localhost:5174/'); // URL вашего React-приложения
+    // win.loadFile(path.join(__dirname, 'index.html'));
     win.webContents.openDevTools();
 
     const menu = Menu.buildFromTemplate([
@@ -36,6 +37,10 @@ function createWindow() {
                     label: 'Reload',
                     accelerator: 'CmdOrCtrl+R',
                     click: () => win.webContents.reload()
+                },
+                {
+                    label: 'send this thing',
+                    click: () => win.webContents.send('fuck', 'meow~')
                 }
             ]
         }
@@ -46,8 +51,9 @@ function createWindow() {
     const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
     const ptyProcess = pty.spawn(shell, [], {
         name: 'xterm-color',
-        cwd: process.env.HOME,
-        env: { ...process.env, PS1: '\\u@\\h \\W $ ' }
+        cwd: './',
+        // env: { ...process.env, PS1: '\\u@\\h \\W $ ' }
+        env: process.env
     });
 
     ptyProcess.on('data', function (data) {
@@ -57,7 +63,6 @@ function createWindow() {
     ipcMain.on('terminal.keystroke', (event, input) => {
         ptyProcess.write(input);
     });
-
 }
 
 require("./ipcMain.cjs")
