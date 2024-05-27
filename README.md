@@ -1,30 +1,30 @@
-# React + TypeScript + Vite
+# CodeSpark
+## CodeSpark - это редактор кода, написанный на Typescript React + Electron, аналог VS Code
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+### Как запустить?
+1. Склонировать репозиторий:
+```bash
+git clone https://github.com/dimabreus/codesparkts.git
+```
+2. Перейти в директорию проекта:
+```bash
+cd codesparkts
+```
+3. Установить зависимости:
+```bash
+npm i
+```
+4. Запустить Front-end (React) часть приложения:
+```bash
+npm run rstart
+```
+5. Заменить URL к React приложению на актуальный на `18` строчке `app/main.cjs`
+6. Запустить Back-end (Electron) часть приложения:
+```bash
+npm run estart
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Библиотеки из Visual Studio Code:
+1. [Monaco Editor](https://www.npmjs.com/package/monaco-editor)
+2. [Xterm.js](https://www.npmjs.com/package/@xterm/xterm)
+- 2.1 [node-pty](https://www.npmjs.com/package/node-pty)
