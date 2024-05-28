@@ -48,6 +48,8 @@ function App() {
 
   return (
     <>
+      {/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
+     // @ts-ignore TS2322 */}
       <SplitPane // Structure and EditorTerminal
         split='vertical'
         sizes={sizes}
@@ -61,6 +63,8 @@ function App() {
             />
           </div>
         </Pane>
+        {/* this lib is incompatible with react18. To fix     // children: React.ReactNode; needs to be added to SplitPaneProps.
+     // @ts-ignore TS2322 */}
         <SplitPane // Editor and terminal
           className='EditorTerminal'
           split='horizontal'
