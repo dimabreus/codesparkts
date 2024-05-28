@@ -55,7 +55,7 @@ function App() {
         sizes={sizes}
         onChange={(args) => setSizesAndResize(setSizes, args)}
       >
-        <Pane minSize={150} maxSize='30%'>
+        <Pane minSize={150} maxSize='40%'>
           <div className="Structure" style={{ ...layoutCSS }}>
             <Structure
               files={files}

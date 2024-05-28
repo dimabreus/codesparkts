@@ -30,7 +30,7 @@ const Structure: FunctionComponent<StructureProps> = ({ files, setFilePath }) =>
             {files.map((file: File, index: number) => (
                 <div key={index}>
                     {file.type === 'file' ? (
-                        <div className="file">
+                        <div className="file item">
                             <button
                                 onClick={() => {
                                     setFilePath(file.dir);
@@ -38,7 +38,7 @@ const Structure: FunctionComponent<StructureProps> = ({ files, setFilePath }) =>
                             >{file.filename}</button>
                         </div>
                     ) : (
-                        <div className="directory">
+                        <div className="directory item">
                             <button
                                 onClick={() => toggleDir(file.dir)}
                                 style={{ textDecoration: openDirs.includes(file.dir) ? 'underline' : 'none' }}

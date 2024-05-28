@@ -2,3 +2,16 @@
     max-height: 100%;
     overflow-y: auto;
 }
+
+/* .file, */
+.directory {
+    padding-block: .5px;
+}
+
+.item > button{
+    /* border-radius: 0px; */
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+    padding-block: .3em;
+}
