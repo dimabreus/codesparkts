@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Terminal } from '@xterm/xterm';
+import { ITerminalOptions, Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
 import '@xterm/xterm/css/xterm.css';
 import { ipcRenderer } from '../electron/ipcHandlers';
@@ -10,7 +10,14 @@ const XTermComponent: React.FC = () => {
     const fitAddon = useRef<FitAddon>(new FitAddon());
 
     useEffect(() => {
-        xterm.current = new Terminal();
+        const options: ITerminalOptions = {
+            theme: {
+                background: '#1С1С1С',
+                foreground: '#ffffff'
+            }
+        };
+        
+        xterm.current = new Terminal(options);
         xterm.current.loadAddon(fitAddon.current);
     
         if (terminalRef.current) {
