@@ -1,5 +1,6 @@
 # CodeSpark
 ## CodeSpark - это редактор кода, написанный на Typescript React + Electron, аналог VS Code
+![image](https://github.com/dimabreus/codesparkts/assets/125917095/3b68b7dd-4007-49de-a299-6f8ed2a0b909)
 
 ### Как запустить?
 1. Склонировать репозиторий:
