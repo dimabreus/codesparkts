@@ -36,7 +36,7 @@ function App() {
       try {
         const directory = filePath.split('/');
         directory.pop();
-        const filesFromIPC = await ipcRenderer.invoke('read-directory', directory.join('/') || './');
+        const filesFromIPC = await ipcRenderer.invoke('read-directory', directory.join('/') || process.cwd());
         setFiles(filesFromIPC);
       } catch (error) {
         console.error('Ошибка при получении файлов:', error);

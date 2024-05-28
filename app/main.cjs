@@ -15,7 +15,7 @@ function createWindow() {
         }
     });
 
-    win.loadURL('http://localhost:5174/'); // URL вашего React-приложения
+    win.loadURL('http://localhost:5173/'); // URL вашего React-приложения
     // win.loadFile(path.join(__dirname, 'index.html'));
     win.webContents.openDevTools();
 
@@ -52,8 +52,8 @@ function createWindow() {
     const ptyProcess = pty.spawn(shell, [], {
         name: 'xterm-color',
         cwd: './',
-        // env: { ...process.env, PS1: '\\u@\\h \\W $ ' }
-        env: process.env
+        env: { ...process.env, PS1: '\\u@\\h \\W $ ' }
+        // env: process.env
     });
 
     ptyProcess.on('data', function (data) {
