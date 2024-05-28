@@ -6,11 +6,9 @@
 
 .Editor {
   height: 100%;
-  /* width: 80%; */
 }
 
 .EditorContainer {
-  /* height: 70vh; */
   height: 100%;
 }
 
@@ -21,8 +19,6 @@
 /* Terminal Setup */
 
 .Terminal {
-  /* height: 30vh; */
-  /* width: 80%; */
   height: 100%;
 }
 
@@ -33,7 +29,3 @@
 }
 
 /* Structure */
-
-.Structure {
-  width: 20%;
-}

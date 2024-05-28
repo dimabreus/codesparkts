@@ -1,8 +1,9 @@
 import { FunctionComponent, useState } from 'react';
+import './Structure.css';
 
 interface StructureProps {
     files: File[];
-    setFilePath: (path: string) => void
+    setFilePath: (path: string) => void;
 }
 
 interface File {
@@ -24,8 +25,8 @@ const Structure: FunctionComponent<StructureProps> = ({ files, setFilePath }) =>
         }
     };
 
-    return (
-        <div>
+    const renderFiles = (files: File[]) => (
+        <>
             {files.map((file: File, index: number) => (
                 <div key={index}>
                     {file.type === 'file' ? (
@@ -33,7 +34,6 @@ const Structure: FunctionComponent<StructureProps> = ({ files, setFilePath }) =>
                             <button
                                 onClick={() => {
                                     setFilePath(file.dir);
-                                    // TODO: вызвать метод, открытия файла с file.path из FileOpener
                                 }}
                             >{file.filename}</button>
                         </div>
@@ -47,14 +47,19 @@ const Structure: FunctionComponent<StructureProps> = ({ files, setFilePath }) =>
                             </button>
                             {openDirs.includes(file.dir) && (
                                 <div style={{ marginLeft: '20px' }}>
-                                    {/* Рекурсивно вызываем Structure для отображения вложенных директорий */}
-                                    <Structure files={file.files || []} setFilePath={setFilePath} />
+                                    {renderFiles(file.files || [])}
                                 </div>
                             )}
                         </div>
                     )}
                 </div>
             ))}
+        </>
+    );
+
+    return (
+        <div className="structure-container">
+            {renderFiles(files)}
         </div>
     );
 };
