@@ -39,8 +39,9 @@ function createWindow() {
                     click: () => win.webContents.reload()
                 },
                 {
-                    label: 'send this thing',
-                    click: () => win.webContents.send('fuck', 'meow~')
+                    label: 'Quit',
+                    accelerator: 'CmdOrCtrl+Q',
+                    click: () => app.quit()
                 }
             ]
         }
