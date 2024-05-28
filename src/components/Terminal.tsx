@@ -12,7 +12,7 @@ const XTermComponent: React.FC = () => {
     useEffect(() => {
         const options: ITerminalOptions = {
             theme: {
-                background: '#1С1С1С',
+                background: '#1c1c1c',
                 foreground: '#ffffff'
             }
         };
