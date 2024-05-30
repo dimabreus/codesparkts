@@ -14,4 +14,7 @@
     width: 100%;
     text-align: left;
     padding-block: .3em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

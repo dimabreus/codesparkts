@@ -9,13 +9,11 @@ function createWindow() {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false,
-            enableRemoteModule: true, // Только если это действительно необходимо
-            webSecurity: false, // Отключение политики одного источника (CORS), временно для разработки
+            contextIsolation: false
         }
     });
 
-    win.loadURL('http://localhost:5173/'); // URL вашего React-приложения
+    win.loadURL('http://localhost:5174/'); // URL вашего React-приложения
     // win.loadFile(path.join(__dirname, 'index.html'));
     win.webContents.openDevTools();
 
