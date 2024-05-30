@@ -1,5 +1,6 @@
 import { FunctionComponent, useState } from 'react';
 import './Structure.css';
+import { getIconForFile, getIconForFolder, getIconForOpenFolder } from 'vscode-icons-js';
 
 interface StructureProps {
     files: File[];
@@ -16,7 +17,7 @@ interface File {
 
 // Список игнорируемых файлов и директорий
 const ignoredFiles = [
-    '.git', '.DS_Store', 'Thumbs.db', 
+    '.git', '.DS_Store', 'Thumbs.db',
     '.idea', '.vscode', 'venv', 'vendor', '*.log', 'tmp', '*.swp', '.svn', '.hg'
 ];
 
@@ -63,7 +64,8 @@ const Structure: FunctionComponent<StructureProps> = ({ files, setFilePath }) =>
                                         setFilePath(file.dir);
                                     }}
                                 >
-                                    {file.filename}
+                                    <img className='icon' src={'./src/assets/icons/' + getIconForFile(file.filename!)} />
+                                    <span>{file.filename}</span>
                                 </button>
                             </div>
                         ) : (
@@ -72,7 +74,8 @@ const Structure: FunctionComponent<StructureProps> = ({ files, setFilePath }) =>
                                     onClick={() => toggleDir(file.dir)}
                                     style={{ textDecoration: openDirs.includes(file.dir) ? 'underline' : 'none' }}
                                 >
-                                    {openDirs.includes(file.dir) ? '\u25BE' : '\u25B8'} {file.dirname}
+                                    <img className='icon' src={'./src/assets/icons/' + (openDirs.includes(file.dir) ? getIconForOpenFolder(file.dirname!) : getIconForFolder(file.dirname!))} />
+                                    <span>{file.dirname}</span>
                                 </button>
                                 {openDirs.includes(file.dir) && (
                                     <div style={{ marginLeft: '20px' }}>

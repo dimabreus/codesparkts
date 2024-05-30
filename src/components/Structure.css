@@ -14,7 +14,16 @@
     width: 100%;
     text-align: left;
     padding-block: .3em;
+    display: flex;
+}
+
+.item > button > span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.icon {
+    width: 20px;
+    margin-right: 3px;
 }
