@@ -84,3 +84,6 @@ npm run estart
     - `fileLanguageMapper.ts`- файл для перевода расширения файла в название языка для `Monaco Editor`
   - `assets/`
     - `icons/` - папка с иконками файлов и директорий
+
+### Todo:
+- Обновить версию vscode-icons-js вместе с иконками
