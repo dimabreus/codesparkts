@@ -87,4 +87,3 @@ npm run estart
 
 ### Todo:
 - Добавить [@xterm/addon-webgl](https://www.npmjs.com/package/@xterm/addon-webgl)
-- Добавить [@xterm/addon-unicode11](https://www.npmjs.com/package/@xterm/addon-unicode11)

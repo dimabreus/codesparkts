@@ -3,22 +3,26 @@ import { ITerminalOptions, Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
 import '@xterm/xterm/css/xterm.css';
 import { ipcRenderer } from '../electron/ipcHandlers';
+import { Unicode11Addon } from '@xterm/addon-unicode11';
 
 const XTermComponent: React.FC = () => {
     const terminalRef = useRef<HTMLDivElement>(null);
     const xterm = useRef<Terminal | null>(null);
     const fitAddon = useRef<FitAddon>(new FitAddon());
+    const unicode11Addon = useRef<Unicode11Addon>(new Unicode11Addon());
 
     useEffect(() => {
         const options: ITerminalOptions = {
             theme: {
                 background: '#1c1c1c',
                 foreground: '#ffffff'
-            }
+            },
+            allowProposedApi: true
         };
         
         xterm.current = new Terminal(options);
         xterm.current.loadAddon(fitAddon.current);
+        xterm.current.loadAddon(unicode11Addon.current);
     
         if (terminalRef.current) {
             xterm.current.open(terminalRef.current);
