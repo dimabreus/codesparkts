@@ -64,6 +64,7 @@ npm run estart
 1. [Monaco Editor](https://www.npmjs.com/package/monaco-editor)
 2. [Xterm.js](https://www.npmjs.com/package/@xterm/xterm)
 - 2.1 [node-pty](https://www.npmjs.com/package/node-pty)
+3. [JsChardet](https://www.npmjs.com/package/jschardet)
 
 ### Путеводитель:
 - `app/`

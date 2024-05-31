@@ -13,7 +13,7 @@ function createWindow() {
         }
     });
 
-    win.loadURL('http://localhost:5176/'); // URL вашего React-приложения
+    win.loadURL('http://localhost:5173/'); // URL вашего React-приложения
     // win.loadFile(path.join(__dirname, 'index.html'));
     win.webContents.openDevTools();
 

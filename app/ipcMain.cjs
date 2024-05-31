@@ -1,5 +1,6 @@
 const { ipcMain, dialog } = require('electron');
 const fs = require('fs');
+const jschardet = require('jschardet');
 const path = require('path');
 
 ipcMain.handle('dialog:openFile', async () => {
@@ -21,7 +22,20 @@ ipcMain.handle('dialog:saveFile', async () => {
 });
 
 ipcMain.handle('read-file', async (event, filePath) => {
-    return fs.promises.readFile(filePath, 'utf-8');
+    try {
+        const buffer = await fs.promises.readFile(filePath);
+
+        const detected = jschardet.detect(buffer);
+        console.log(`Detected encoding: ${detected.encoding}`)
+        const encoding = detected.encoding || 'utf-8';
+
+        const text = buffer.toString(encoding);
+
+        return text;
+    } catch (error) {
+        console.error('Error reading file:', error);
+        throw error;
+    }
 });
 
 ipcMain.handle('save-file', async (event, filePath, content) => {
