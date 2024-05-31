@@ -73,3 +73,30 @@ function readFiles(directoryPath) {
 ipcMain.handle('read-directory', async (event, directory) => {
     return readFiles(directory)
 });
+
+ipcMain.handle('rename-path', async (event, oldPath, newPath) => {
+    try {
+        console.log(`Renaming ${oldPath} to ${newPath}`);
+        await fs.promises.rename(oldPath, newPath);
+        return { success: true };
+    } catch (error) {
+        console.error('Error renaming path:', error);
+        return { success: false, error: error.message };
+    }
+});
+
+ipcMain.handle('delete-path', async (event, targetPath) => {
+    try {
+        console.log(`Deleting ${targetPath}`);
+        const stats = await fs.promises.stat(targetPath);
+        if (stats.isDirectory()) {
+            await fs.promises.rmdir(targetPath, { recursive: true });
+        } else {
+            await fs.promises.unlink(targetPath);
+        }
+        return { success: true };
+    } catch (error) {
+        console.error('Error deleting path:', error);
+        return { success: false, error: error.message };
+    }
+});
