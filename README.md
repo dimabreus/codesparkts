@@ -87,3 +87,4 @@ npm run estart
 
 ### Todo:
 - Обновить версию vscode-icons-js вместе с иконками
+- Добавить больше языков в fileLanguageMapper.ts
