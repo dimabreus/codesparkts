@@ -20,7 +20,7 @@ npm i
 ```bash
 npm run rstart
 ```
-5. Заменить URL к React приложению на актуальный на `18` строчке `app/main.cjs`
+5. Заменить URL к React приложению на актуальный на `16` строчке `app/main.cjs`
 6. Запустить Back-end (Electron) часть приложения:
 ```bash
 npm run estart
