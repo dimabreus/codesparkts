@@ -86,4 +86,3 @@ npm run estart
     - `icons/` - папка с иконками файлов и директорий
 
 ### Todo:
-- Добавить [@xterm/addon-webgl](https://www.npmjs.com/package/@xterm/addon-webgl)
